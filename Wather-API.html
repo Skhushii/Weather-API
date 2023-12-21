@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Search</title>
+    <style>
+        body {
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        #container {
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #city {
+            padding: 10px;
+            width: 200px;
+            margin-right: 10px;
+        }
+
+        #searchBtn {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+        }
+
+        #searchBtn:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            margin-top: 20px;
+            white-space: pre-line;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <h1>Weather Search</h1>
+        <input type="text" id="city" placeholder="Enter city">
+        <button id="searchBtn" onclick="search()">Search</button>
+        <div id="result"></div>
+
+        <script>
+            function search() {
+                let input = document.getElementById('city').value;
+                const url = `https://weather338.p.rapidapi.com/locations/search?query=${input}&language=en-US`;
+                const options = {
+                    method: 'GET',
+                    headers: {
+                        'X-RapidAPI-Key': '3c0c315f5dmsh59c33132d9536d0p151cb4jsn0ddcdc04c07a',
+                        'X-RapidAPI-Host': 'weather338.p.rapidapi.com'
+                    }
+                };
+
+                fetch(url, options)
+                    .then((res) => res.json())
+                    .then((result) => {
+                        console.log(result);
+                        document.getElementById('result').innerText = JSON.stringify(result, null, 2);
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                        document.getElementById('result').innerText = 'Error occurred. Please try again.';
+                    });
+            }
+        </script>
+    </div>
+</body>
+
+</html>
